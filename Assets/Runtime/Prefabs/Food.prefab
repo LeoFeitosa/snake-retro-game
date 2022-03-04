@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4363619209000530276
+--- !u!1 &8233838463803560527
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,68 +8,58 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4363619209000530202}
-  - component: {fileID: 5092399344223493719}
+  - component: {fileID: 81015321691326094}
+  - component: {fileID: -1863293050061987638}
   m_Layer: 0
-  m_Name: Head
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4363619209000530202
+--- !u!4 &81015321691326094
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4363619209000530276}
+  m_GameObject: {fileID: 8233838463803560527}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_Children:
-  - {fileID: 2113543229761861981}
+  - {fileID: 3000925518199532719}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5092399344223493719
+--- !u!114 &-1863293050061987638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4363619209000530276}
+  m_GameObject: {fileID: 8233838463803560527}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9d7e936a763084f8d92c4d44d15d15, type: 3}
+  m_Script: {fileID: 11500000, guid: 351daab6c163abd41b7c40dc3cc69a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bodyPrefab: {fileID: 8233838463803560527, guid: ed7c0af1b4f0c704a9f4cdec27c216fb, type: 3}
-  _timeToMove: 0.2
-  _audioDie: {fileID: 8300000, guid: 0588b30c2d5e87f429f6e8094165a0b0, type: 3}
-  _dieVolume: 0.5
-  _audioEat: {fileID: 8300000, guid: 1b73efbfbe2f7454c9f1a47befca2816, type: 3}
-  _eatVolume: 0.3
-  _audioMovement: {fileID: 8300000, guid: d621d5046216cc44fa59dbd515305061, type: 3}
-  _movementVolume: 0.15
-  _audioOpening: {fileID: 8300000, guid: d3c4009fbbf1486478a7467fdf085dd3, type: 3}
-  _openingVolume: 0.4
-  _audioSpeedUp: {fileID: 8300000, guid: 22f00682b749baa49a84cb31a871e87c, type: 3}
-  _speedUpVolume: 0.5
---- !u!1001 &1654148983657386802
+  _delayBlink: 0.4
+  square: {fileID: 3000925518199532718}
+--- !u!1001 &2451376816240969408
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4363619209000530202}
+    m_TransformParent: {fileID: 81015321691326094}
     m_Modifications:
     - target: {fileID: 837783751103343214, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
       propertyPath: m_Name
       value: Square
       objectReference: {fileID: 0}
     - target: {fileID: 837783751103343214, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 837783751103343215, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
       propertyPath: m_RootOrder
@@ -115,22 +105,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 837783752226438332, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
+    - target: {fileID: 837783752226438334, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
+      propertyPath: m_Color.a
+      value: 0.9019608
       objectReference: {fileID: 0}
-    - target: {fileID: 837783752575504790, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
+    - target: {fileID: 837783752575504784, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
+      propertyPath: m_Color.a
+      value: 0.9019608
       objectReference: {fileID: 0}
-    - target: {fileID: 837783752651473845, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
+    - target: {fileID: 837783752651473847, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
+      propertyPath: m_Color.a
+      value: 0.9019608
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
---- !u!4 &2113543229761861981 stripped
+--- !u!1 &3000925518199532718 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 837783751103343214, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
+  m_PrefabInstance: {fileID: 2451376816240969408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3000925518199532719 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 837783751103343215, guid: 99ace32e4e0940341a0826dd91729b2b, type: 3}
-  m_PrefabInstance: {fileID: 1654148983657386802}
+  m_PrefabInstance: {fileID: 2451376816240969408}
   m_PrefabAsset: {fileID: 0}
