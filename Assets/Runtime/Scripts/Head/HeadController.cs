@@ -5,69 +5,48 @@ using UnityEngine;
 
 public class HeadController : MonoBehaviour
 {
-    SpawnController _spawn;
-    bool _isMoving;
-    Vector2 _originPossition;
-    Vector2 _targetPossition;
-    [SerializeField] float _timeToMove = 0.3f;
-
+    SpawnController _spawnBody;
     BodyController _bodyInGame;
+    Vector2 _direction = Vector2.zero;
+    [SerializeField] float _timeToMove = 0.3f;
 
     void Start()
     {
-        _spawn = FindObjectOfType<SpawnController>();
-        _bodyInGame = _spawn.GenerateBody();
+        _spawnBody = FindObjectOfType<SpawnController>();
+        _bodyInGame = _spawnBody.GenerateBody();
+        _ direction = Vector2.left;
+
+        StartCoroutine(Move(_timeToMove));
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Move();
         CheckIfAte();
+        SetDirection();
     }
 
-    private void Move()
+    private void SetDirection()
     {
-        if (!_isMoving)
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                StartCoroutine(SetDirection(Vector2.up));
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                StartCoroutine(SetDirection(Vector2.down));
-            }
-            if (Input.GetKey(KeyCode.A))
-            {
-                StartCoroutine(SetDirection(Vector2.left));
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                StartCoroutine(SetDirection(Vector2.right));
-            }
-        }
+        if (Input.GetKey(KeyCode.W) && _direction != Vector2.down)
+            _direction = Vector2.up;
+        else if (Input.GetKey(KeyCode.S) && _direction != Vector2.up)
+            _direction = Vector2.down;
+        else if (Input.GetKey(KeyCode.A) && _direction != Vector2.right)
+            _direction = Vector2.left;
+        else if (Input.GetKey(KeyCode.D) && _direction != Vector2.left)
+            _direction = Vector2.right;
     }
 
-    IEnumerator SetDirection(Vector2 direction)
+    IEnumerator Move(float speed)
     {
-        _isMoving = true;
+        transform.position = new Vector2(
+             transform.position.x + (_direction.x / 2),
+             transform.position.y + (_direction.y / 2)
+            );
 
-        float elapsedTime = 0;
+        yield return new WaitForSeconds(speed);
 
-        _originPossition = transform.position;
-        _targetPossition = _originPossition + (direction / 2);
-
-        while (elapsedTime < _timeToMove)
-        {
-            transform.position = Vector2.Lerp(_originPossition, _targetPossition, (elapsedTime / _timeToMove));
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        transform.position = _targetPossition;
-
-        _isMoving = false;
+        StartCoroutine(Move(speed));
     }
 
     void CheckIfAte()
@@ -75,11 +54,11 @@ public class HeadController : MonoBehaviour
         if (_bodyInGame.transform.position == transform.position)
         {
             Destroy(_bodyInGame.gameObject);
-            _bodyInGame = _spawn.GenerateBody();
+            _bodyInGame = _spawnBody.GenerateBody();
             while (_bodyInGame.transform.position == transform.position)
             {
                 Destroy(_bodyInGame.gameObject);
-                _bodyInGame = _spawn.GenerateBody();
+                _bodyInGame = _spawnBody.GenerateBody();
             }
         }
     }
