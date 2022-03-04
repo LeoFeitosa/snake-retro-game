@@ -5,9 +5,9 @@ using UnityEngine;
 public class SpawnController : MonoBehaviour
 {
     [SerializeField] Transform _limits;
-    [SerializeField] BodyController _body;
+    [SerializeField] GameObject _body;
 
-    public BodyController GenerateBody()
+    public GameObject GenerateBody()
     {
         return Instantiate(_body, RandomPosition(), Quaternion.identity);
     }

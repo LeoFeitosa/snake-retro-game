@@ -6,9 +6,11 @@ using UnityEngine;
 public class HeadController : MonoBehaviour
 {
     SpawnController _spawnBody;
-    BodyController _bodyInGame;
-    Vector2 _direction = Vector2.zero;
+    GameObject _bodyInGame;
+    List<Transform> _bodyList;
+    [SerializeField] GameObject _bodyPrefab;
     [SerializeField] float _timeToMove = 0.3f;
+    Vector2 _direction = Vector2.zero;
 
     void Start()
     {
@@ -16,12 +18,14 @@ public class HeadController : MonoBehaviour
         _bodyInGame = _spawnBody.GenerateBody();
         _direction = Vector2.left;
 
+        _bodyList = new List<Transform>();
+        _bodyList.Add(transform);
+
         StartCoroutine(Move());
     }
 
     void Update()
     {
-        CheckIfAte();
         SetDirection();
     }
 
@@ -39,6 +43,9 @@ public class HeadController : MonoBehaviour
 
     IEnumerator Move()
     {
+        UpdatePositionBody();
+        CheckIfAte();
+
         transform.position = new Vector2(
              transform.position.x + (_direction.x / 2),
              transform.position.y + (_direction.y / 2)
@@ -55,11 +62,33 @@ public class HeadController : MonoBehaviour
         {
             Destroy(_bodyInGame.gameObject);
             _bodyInGame = _spawnBody.GenerateBody();
-            while (_bodyInGame.transform.position == transform.position)
+
+            for (int i = _bodyList.Count - 1; i > 0; i--)
             {
-                Destroy(_bodyInGame.gameObject);
-                _bodyInGame = _spawnBody.GenerateBody();
+                if (_bodyList[i].position == _bodyInGame.transform.position)
+                {
+                    Destroy(_bodyInGame.gameObject);
+                    _bodyInGame = _spawnBody.GenerateBody();
+                    CheckIfAte();
+                }
             }
+
+            IncreaseBody();
+        }
+    }
+
+    void IncreaseBody()
+    {
+        Transform bodyPrefab = Instantiate(_bodyPrefab.transform);
+        bodyPrefab.position = _bodyList[_bodyList.Count - 1].position;
+        _bodyList.Add(bodyPrefab);
+    }
+
+    void UpdatePositionBody()
+    {
+        for (int i = _bodyList.Count - 1; i > 0; i--)
+        {
+            _bodyList[i].position = _bodyList[i - 1].position;
         }
     }
 }

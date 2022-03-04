@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _limits: {fileID: 649361776}
-  _body: {fileID: 3949679193231497012, guid: ed7c0af1b4f0c704a9f4cdec27c216fb, type: 3}
+  _body: {fileID: 8233838463803560527, guid: ed7c0af1b4f0c704a9f4cdec27c216fb, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +336,14 @@ PrefabInstance:
     - target: {fileID: 4363619209000530276, guid: e79f13a97af1ea44f924f433d540732a, type: 3}
       propertyPath: m_Name
       value: Head
+      objectReference: {fileID: 0}
+    - target: {fileID: 5092399344223493719, guid: e79f13a97af1ea44f924f433d540732a, type: 3}
+      propertyPath: _bodyPrefab
+      value: 
+      objectReference: {fileID: 8233838463803560527, guid: ed7c0af1b4f0c704a9f4cdec27c216fb, type: 3}
+    - target: {fileID: 5092399344223493719, guid: e79f13a97af1ea44f924f433d540732a, type: 3}
+      propertyPath: _timeToMove
+      value: 0.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e79f13a97af1ea44f924f433d540732a, type: 3}
