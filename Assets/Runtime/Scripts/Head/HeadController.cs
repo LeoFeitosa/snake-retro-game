@@ -14,9 +14,9 @@ public class HeadController : MonoBehaviour
     {
         _spawnBody = FindObjectOfType<SpawnController>();
         _bodyInGame = _spawnBody.GenerateBody();
-        _ direction = Vector2.left;
+        _direction = Vector2.left;
 
-        StartCoroutine(Move(_timeToMove));
+        StartCoroutine(Move());
     }
 
     void Update()
@@ -37,16 +37,16 @@ public class HeadController : MonoBehaviour
             _direction = Vector2.right;
     }
 
-    IEnumerator Move(float speed)
+    IEnumerator Move()
     {
         transform.position = new Vector2(
              transform.position.x + (_direction.x / 2),
              transform.position.y + (_direction.y / 2)
             );
 
-        yield return new WaitForSeconds(speed);
+        yield return new WaitForSeconds(_timeToMove);
 
-        StartCoroutine(Move(speed));
+        StartCoroutine(Move());
     }
 
     void CheckIfAte()
