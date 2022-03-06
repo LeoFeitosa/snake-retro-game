@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
-    [SerializeField] Transform _limits;
+    [SerializeField] Transform _limitsPositive;
+    [SerializeField] Transform _limitsNegative;
     [SerializeField] GameObject _body;
 
     public GameObject GenerateBody()
@@ -18,9 +19,9 @@ public class SpawnController : MonoBehaviour
 
         position = new Vector2(
             Mathf.RoundToInt(
-                Random.Range(_limits.transform.position.x * -1, _limits.transform.position.x)),
+                Random.Range(_limitsNegative.transform.position.x, _limitsPositive.transform.position.x)),
             Mathf.RoundToInt(
-                Random.Range(_limits.transform.position.y * -1, _limits.transform.position.y))
+                Random.Range(_limitsNegative.transform.position.y, _limitsPositive.transform.position.y))
             );
 
         return position;
