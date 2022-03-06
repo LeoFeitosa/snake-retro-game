@@ -44,8 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9d7e936a763084f8d92c4d44d15d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _limitsExtra: 0.5
   _bodyPrefab: {fileID: 8233838463803560527, guid: ed7c0af1b4f0c704a9f4cdec27c216fb, type: 3}
   _timeToMove: 0.2
+  timeLapse: 0.16
   _audioDie: {fileID: 8300000, guid: 0588b30c2d5e87f429f6e8094165a0b0, type: 3}
   _dieVolume: 0.5
   _audioEat: {fileID: 8300000, guid: 1b73efbfbe2f7454c9f1a47befca2816, type: 3}
