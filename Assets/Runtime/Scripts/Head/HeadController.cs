@@ -10,6 +10,7 @@ public class HeadController : MonoBehaviour
     List<Transform> _bodyList;
     Vector2 _direction = Vector2.zero;
     bool _dead = false;
+    float _delayStart;
 
     [Header("Movement limit added to spawn limit")]
     [SerializeField] float _limitsExtra;
@@ -42,14 +43,20 @@ public class HeadController : MonoBehaviour
         _bodyList = new List<Transform>();
         _bodyList.Add(this.transform);
 
-        AudioController.Instance.PlayAudioCue(_audioOpening, _openingVolume);
+        StartCoroutine(Initialize());
 
-        StartCoroutine(Move());
+        AudioController.Instance.PlayAudioCue(_audioOpening, _openingVolume);
     }
 
     void Update()
     {
         SetDirection();
+    }
+
+    IEnumerator Initialize()
+    {
+        yield return new WaitForSeconds(_audioOpening.length);
+        StartCoroutine(Move());
     }
 
     void SetDirection()
@@ -93,6 +100,14 @@ public class HeadController : MonoBehaviour
         }
     }
 
+    void UpdateSpeed()
+    {
+        if ((_bodyList.Count - 1) % 10 == 0)
+        {
+            AudioController.Instance.PlayAudioCue(_audioSpeedUp, _speedUpVolume);
+        }
+    }
+
     void CheckIfAte()
     {
         if (_bodyInGame.transform.position == transform.position)
@@ -124,6 +139,8 @@ public class HeadController : MonoBehaviour
         Transform bodyPrefab = Instantiate(_bodyPrefab.transform);
         bodyPrefab.position = _bodyList[_bodyList.Count - 1].position;
         _bodyList.Add(bodyPrefab.transform);
+
+        UpdateSpeed();
     }
 
     void UpdatePositionBody()
