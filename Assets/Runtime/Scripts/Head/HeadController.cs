@@ -50,7 +50,7 @@ public class HeadController : MonoBehaviour
         SetDirection();
     }
 
-    private void SetDirection()
+    void SetDirection()
     {
         if (Input.GetKey(KeyCode.W) && _direction != Vector2.down)
             _direction = Vector2.up;
@@ -88,21 +88,26 @@ public class HeadController : MonoBehaviour
         {
             AudioController.Instance.PlayAudioCue(_audioEat, _eatVolume);
 
-            Destroy(_bodyInGame.gameObject);
-            _bodyInGame = _spawnBody.GenerateBody();
-
-            for (int i = _bodyList.Count - 1; i > 0; i--)
-            {
-                if (_bodyInGame.transform.position == _bodyList[i].position)
-                {
-                    Destroy(_bodyInGame.gameObject);
-                    _bodyInGame = _spawnBody.GenerateBody();
-                    CheckIfAte();
-                }
-            }
+            _bodyInGame = CreateFood();
 
             IncreaseBody();
         }
+    }
+
+    GameObject CreateFood()
+    {
+        Destroy(_bodyInGame.gameObject);
+        _bodyInGame = _spawnBody.GenerateBody();
+
+        for (int i = _bodyList.Count - 1; i > 0; i--)
+        {
+            if (_bodyInGame.transform.position == _bodyList[i].position)
+            {
+                CreateFood();
+            }
+        }
+
+        return _bodyInGame;
     }
 
     void IncreaseBody()
