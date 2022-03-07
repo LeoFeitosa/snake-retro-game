@@ -88,18 +88,16 @@ public class HeadController : MonoBehaviour
         {
             AudioController.Instance.PlayAudioCue(_audioEat, _eatVolume);
 
-            _bodyInGame = CreateFood();
-
-            IncreaseBody();
+            CreateFood();
         }
     }
 
-    GameObject CreateFood()
+    void CreateFood()
     {
         Destroy(_bodyInGame.gameObject);
         _bodyInGame = _spawnBody.GenerateBody();
 
-        for (int i = _bodyList.Count - 1; i > 0; i--)
+        for (int i = 0; i <= _bodyList.Count - 1; i++)
         {
             if (_bodyInGame.transform.position == _bodyList[i].position)
             {
@@ -107,7 +105,7 @@ public class HeadController : MonoBehaviour
             }
         }
 
-        return _bodyInGame;
+        IncreaseBody();
     }
 
     void IncreaseBody()
