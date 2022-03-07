@@ -17,7 +17,9 @@ public class HeadController : MonoBehaviour
     [Header("Body")]
     [SerializeField] GameObject _bodyPrefab;
     [SerializeField] float _timeToMove = 0.3f;
-    [SerializeField] float timeLapse = 0.1f;
+    [SerializeField] float _timeLapse = 0.1f;
+    [SerializeField] float _timeDelayButton = 0.8f;
+    float _timeButton = 0f;
 
     [Header("SFX")]
     [SerializeField] AudioClip _audioDie;
@@ -52,22 +54,29 @@ public class HeadController : MonoBehaviour
 
     void SetDirection()
     {
-        if (Input.GetKey(KeyCode.W) && _direction != Vector2.down)
-            _direction = Vector2.up;
-        else if (Input.GetKey(KeyCode.S) && _direction != Vector2.up)
-            _direction = Vector2.down;
-        else if (Input.GetKey(KeyCode.A) && _direction != Vector2.right)
-            _direction = Vector2.left;
-        else if (Input.GetKey(KeyCode.D) && _direction != Vector2.left)
-            _direction = Vector2.right;
+        _timeButton += Time.deltaTime;
+
+        if (_timeButton >= _timeDelayButton)
+        {
+            _timeButton = 0;
+
+            if (Input.GetKey(KeyCode.W) && _direction != Vector2.down)
+                _direction = Vector2.up;
+            else if (Input.GetKey(KeyCode.S) && _direction != Vector2.up)
+                _direction = Vector2.down;
+            else if (Input.GetKey(KeyCode.A) && _direction != Vector2.right)
+                _direction = Vector2.left;
+            else if (Input.GetKey(KeyCode.D) && _direction != Vector2.left)
+                _direction = Vector2.right;
+        }
     }
 
     IEnumerator Move()
     {
         AudioController.Instance.PlayAudioCue(_audioMovement, _movementVolume);
 
-        UpdatePositionBody();
         CheckCollisionWithYourself();
+        UpdatePositionBody();
 
         transform.position = new Vector2(
              transform.position.x + (_direction.x / 2),
@@ -156,7 +165,7 @@ public class HeadController : MonoBehaviour
         _dead = true;
         AudioController.Instance.PlayAudioCue(_audioDie, _dieVolume);
         _direction = Vector2.zero;
-        StartCoroutine(DestroyBody(timeLapse));
+        StartCoroutine(DestroyBody(_timeLapse));
     }
 
     IEnumerator DestroyBody(float seconds)
