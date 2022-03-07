@@ -66,6 +66,9 @@ public class HeadController : MonoBehaviour
     {
         AudioController.Instance.PlayAudioCue(_audioMovement, _movementVolume);
 
+        UpdatePositionBody();
+        CheckCollisionWithYourself();
+
         transform.position = new Vector2(
              transform.position.x + (_direction.x / 2),
              transform.position.y + (_direction.y / 2)
@@ -73,7 +76,6 @@ public class HeadController : MonoBehaviour
 
         CheckDie();
         CheckIfAte();
-        UpdatePositionBody();
         yield return new WaitForSeconds(_timeToMove);
 
         if (!_dead)
@@ -112,7 +114,7 @@ public class HeadController : MonoBehaviour
     {
         Transform bodyPrefab = Instantiate(_bodyPrefab.transform);
         bodyPrefab.position = _bodyList[_bodyList.Count - 1].position;
-        _bodyList.Add(bodyPrefab);
+        _bodyList.Add(bodyPrefab.transform);
     }
 
     void UpdatePositionBody()
@@ -122,6 +124,17 @@ public class HeadController : MonoBehaviour
             if (_bodyList[i])
             {
                 _bodyList[i].position = _bodyList[i - 1].position;
+            }
+        }
+    }
+
+    void CheckCollisionWithYourself()
+    {
+        for (int i = 2; i <= _bodyList.Count - 1; i++)
+        {
+            if (this.transform.position == _bodyList[i].position)
+            {
+                Die();
             }
         }
     }
