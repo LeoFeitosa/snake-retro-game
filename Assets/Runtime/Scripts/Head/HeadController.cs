@@ -45,7 +45,7 @@ public class HeadController : MonoBehaviour
 
         StartCoroutine(Initialize());
 
-        AudioController.Instance.PlayAudioCue(_audioOpening, _openingVolume);
+        AudioController.Instance.PlayMusic(_audioOpening, _openingVolume);
     }
 
     void Update()
@@ -104,7 +104,7 @@ public class HeadController : MonoBehaviour
     {
         if ((_bodyList.Count - 1) % 10 == 0)
         {
-            AudioController.Instance.PlayAudioCue(_audioSpeedUp, _speedUpVolume);
+            AudioController.Instance.PlayMusic(_audioSpeedUp, _speedUpVolume);
         }
     }
 
