@@ -5,19 +5,24 @@ using UnityEngine;
 
 public class HUDController : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI score;
-    [SerializeField] TextMeshProUGUI hiScore;
-    [SerializeField] TextMeshProUGUI speed;
+    [SerializeField] TextMeshProUGUI _score;
+    [SerializeField] TextMeshProUGUI _hiScore;
+    [SerializeField] TextMeshProUGUI _goal;
+    [SerializeField] TextMeshProUGUI _speed;
+    [SerializeField] GameObject _panelGameover;
+    [SerializeField] TextMeshProUGUI _pressEnterKey;
+    [SerializeField] float _delayBlink;
 
     void Start()
     {
-        this.hiScore.text = PlayerPrefs.GetInt("score").ToString();
+        _panelGameover.SetActive(false);
+        this._hiScore.text = PlayerPrefs.GetInt("score").ToString();
     }
 
     public void SetScore(int score)
     {
-        int currentScore = (score + ConvertStringToInt(this.score.text));
-        this.score.text = currentScore.ToString();
+        int currentScore = (score + ConvertStringToInt(this._score.text));
+        this._score.text = currentScore.ToString();
         SetHiScore(currentScore);
     }
 
@@ -26,13 +31,18 @@ public class HUDController : MonoBehaviour
         if (score > PlayerPrefs.GetInt("score"))
         {
             PlayerPrefs.SetInt("score", score);
-            this.hiScore.text = score.ToString();
+            this._hiScore.text = score.ToString();
         }
     }
 
     public void SetSpeed()
     {
-        this.speed.text = (ConvertStringToInt(speed.text) + 1).ToString();
+        this._speed.text = (ConvertStringToInt(_speed.text) + 1).ToString();
+    }
+
+    public void SetGoal(string goal)
+    {
+        this._goal.text = goal;
     }
 
     int ConvertStringToInt(string stringNumber)
@@ -40,5 +50,20 @@ public class HUDController : MonoBehaviour
         int score;
         int.TryParse(stringNumber, out score);
         return score;
+    }
+
+    public void GameOver()
+    {
+        _panelGameover.SetActive(true);
+        StartCoroutine(Blink());
+    }
+
+    IEnumerator Blink()
+    {
+        _pressEnterKey.enabled = true;
+        yield return new WaitForSeconds(_delayBlink);
+        _pressEnterKey.enabled = false;
+        yield return new WaitForSeconds(_delayBlink);
+        StartCoroutine(Blink());
     }
 }

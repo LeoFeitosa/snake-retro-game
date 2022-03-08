@@ -7,10 +7,12 @@ public class HeadController : MonoBehaviour
 {
     HUDController _hUDController;
     SpawnController _spawnBody;
-    GameObject _bodyInGame;
+    GameObject _foodInGame;
     List<Transform> _bodyList;
     Vector2 _direction = Vector2.zero;
     bool _dead = false;
+    int _amountOfFood = 0;
+    int _goal = 10;
 
     [Header("Movement limit added to spawn limit")]
     [SerializeField] float _limitsExtra;
@@ -43,7 +45,7 @@ public class HeadController : MonoBehaviour
     {
         _hUDController = FindObjectOfType<HUDController>();
         _spawnBody = FindObjectOfType<SpawnController>();
-        _bodyInGame = _spawnBody.GenerateBody();
+        _foodInGame = _spawnBody.GenerateBody();
         _direction = Vector2.left;
 
         _bodyList = new List<Transform>();
@@ -122,7 +124,7 @@ public class HeadController : MonoBehaviour
 
     void CheckIfAte()
     {
-        if (_bodyInGame.transform.position == transform.position)
+        if (_foodInGame.transform.position == transform.position)
         {
             AudioController.Instance.PlayAudioCue(_audioEat, _eatVolume);
             _hUDController.SetScore(5);
@@ -130,14 +132,27 @@ public class HeadController : MonoBehaviour
         }
     }
 
+    void SetGoal()
+    {
+        _amountOfFood += 1;
+
+        if ((_bodyList.Count % 10) == 0)
+        {
+            Debug.Log("1");
+            _goal += 10;
+        }
+
+        _hUDController.SetGoal($"{_amountOfFood}/{_goal}");
+    }
+
     void CreateFood()
     {
-        Destroy(_bodyInGame.gameObject);
-        _bodyInGame = _spawnBody.GenerateBody();
+        Destroy(_foodInGame.gameObject);
+        _foodInGame = _spawnBody.GenerateBody();
 
         for (int i = 0; i <= _bodyList.Count - 1; i++)
         {
-            if (_bodyInGame.transform.position == _bodyList[i].position)
+            if (_foodInGame.transform.position == _bodyList[i].position)
             {
                 CreateFood();
             }
@@ -152,6 +167,7 @@ public class HeadController : MonoBehaviour
         bodyPrefab.position = _bodyList[_bodyList.Count - 1].position;
         _bodyList.Add(bodyPrefab.transform);
 
+        SetGoal();
         UpdateSpeed();
     }
 
@@ -214,5 +230,8 @@ public class HeadController : MonoBehaviour
                 _bodyList.RemoveAt(i);
             }
         }
+
+        Destroy(_foodInGame);
+        _hUDController.GameOver();
     }
 }

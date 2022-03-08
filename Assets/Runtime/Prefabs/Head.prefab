@@ -49,7 +49,7 @@ MonoBehaviour:
   _increaseSpeed: 0.02
   _timeToMove: 0.2
   _timeLapse: 0.1
-  _timeDelayButton: 0.133
+  _timeDelayButton: 0.134
   _increaseDelayButton: 0.0046
   _audioDie: {fileID: 8300000, guid: 0588b30c2d5e87f429f6e8094165a0b0, type: 3}
   _dieVolume: 0.5
