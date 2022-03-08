@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HUDController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class HUDController : MonoBehaviour
     {
         _panelGameover.SetActive(false);
         this._hiScore.text = PlayerPrefs.GetInt("score").ToString();
+    }
+
+    void LateUpdate()
+    {
+        Retry();
     }
 
     public void SetScore(int score)
@@ -65,5 +71,13 @@ public class HUDController : MonoBehaviour
         _pressEnterKey.enabled = false;
         yield return new WaitForSeconds(_delayBlink);
         StartCoroutine(Blink());
+    }
+
+    void Retry()
+    {
+        if (_panelGameover.activeSelf && Input.GetKey(KeyCode.Return) || Input.GetKey("enter"))
+        {
+            SceneManager.LoadScene("Game");
+        }
     }
 }
