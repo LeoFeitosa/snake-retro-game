@@ -46,9 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _limitsExtra: 0.5
   _bodyPrefab: {fileID: 8233838463803560527, guid: ed7c0af1b4f0c704a9f4cdec27c216fb, type: 3}
+  _increaseSpeed: 0.02
   _timeToMove: 0.2
   _timeLapse: 0.1
-  _timeDelayButton: 0.134
+  _timeDelayButton: 0.133
+  _increaseDelayButton: 0.0046
   _audioDie: {fileID: 8300000, guid: 0588b30c2d5e87f429f6e8094165a0b0, type: 3}
   _dieVolume: 0.5
   _audioEat: {fileID: 8300000, guid: 1b73efbfbe2f7454c9f1a47befca2816, type: 3}
@@ -56,7 +58,7 @@ MonoBehaviour:
   _audioMovement: {fileID: 8300000, guid: d621d5046216cc44fa59dbd515305061, type: 3}
   _movementVolume: 0.15
   _audioOpening: {fileID: 8300000, guid: d3c4009fbbf1486478a7467fdf085dd3, type: 3}
-  _openingVolume: 0.4
+  _openingVolume: 0.3
   _audioSpeedUp: {fileID: 8300000, guid: 22f00682b749baa49a84cb31a871e87c, type: 3}
   _speedUpVolume: 0.5
 --- !u!1001 &1654148983657386802

@@ -241,7 +241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 13}
   m_SizeDelta: {x: 450, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &181291749
@@ -633,7 +633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 50
+  m_text: 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cbb5edefa7a24b498a427687b1f6ec5, type: 2}
   m_sharedMaterial: {fileID: -8118080290282953257, guid: 5cbb5edefa7a24b498a427687b1f6ec5, type: 2}
@@ -1107,7 +1107,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1234
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cbb5edefa7a24b498a427687b1f6ec5, type: 2}
   m_sharedMaterial: {fileID: -8118080290282953257, guid: 5cbb5edefa7a24b498a427687b1f6ec5, type: 2}
@@ -1262,8 +1262,9 @@ GameObject:
   - component: {fileID: 1234981852}
   - component: {fileID: 1234981851}
   - component: {fileID: 1234981850}
+  - component: {fileID: 1234981854}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: HUD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1276,7 +1277,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1234981849}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -1350,6 +1351,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1234981854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234981849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da1e3530c521384fb595329ff2ec03c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: {fileID: 2133437853}
+  hiScore: {fileID: 1182253374}
+  speed: {fileID: 776469317}
 --- !u!1 &1286860738
 GameObject:
   m_ObjectHideFlags: 0
@@ -1832,7 +1848,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 600
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cbb5edefa7a24b498a427687b1f6ec5, type: 2}
   m_sharedMaterial: {fileID: -8118080290282953257, guid: 5cbb5edefa7a24b498a427687b1f6ec5, type: 2}

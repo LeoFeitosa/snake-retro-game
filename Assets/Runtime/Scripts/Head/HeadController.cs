@@ -5,21 +5,26 @@ using UnityEngine;
 
 public class HeadController : MonoBehaviour
 {
+    HUDController _hUDController;
     SpawnController _spawnBody;
     GameObject _bodyInGame;
     List<Transform> _bodyList;
     Vector2 _direction = Vector2.zero;
     bool _dead = false;
-    float _delayStart;
 
     [Header("Movement limit added to spawn limit")]
     [SerializeField] float _limitsExtra;
 
     [Header("Body")]
     [SerializeField] GameObject _bodyPrefab;
+    [SerializeField] float _increaseSpeed = 0.03f;
     [SerializeField] float _timeToMove = 0.3f;
     [SerializeField] float _timeLapse = 0.1f;
+
+
+    [Header("Buttons Speed")]
     [SerializeField] float _timeDelayButton = 0.8f;
+    [SerializeField] float _increaseDelayButton = 0.02f;
     float _timeButton = 0f;
 
     [Header("SFX")]
@@ -36,6 +41,7 @@ public class HeadController : MonoBehaviour
 
     void Start()
     {
+        _hUDController = FindObjectOfType<HUDController>();
         _spawnBody = FindObjectOfType<SpawnController>();
         _bodyInGame = _spawnBody.GenerateBody();
         _direction = Vector2.left;
@@ -105,6 +111,12 @@ public class HeadController : MonoBehaviour
         if ((_bodyList.Count - 1) % 10 == 0)
         {
             AudioController.Instance.PlayMusic(_audioSpeedUp, _speedUpVolume);
+
+            _timeToMove -= _increaseSpeed;
+            _timeDelayButton -= _increaseDelayButton;
+
+            _hUDController.SetScore(50);
+            _hUDController.SetSpeed();
         }
     }
 
@@ -113,7 +125,7 @@ public class HeadController : MonoBehaviour
         if (_bodyInGame.transform.position == transform.position)
         {
             AudioController.Instance.PlayAudioCue(_audioEat, _eatVolume);
-
+            _hUDController.SetScore(5);
             CreateFood();
         }
     }
