@@ -18,11 +18,11 @@ public class HeadController : MonoBehaviour
     [SerializeField] float _limitsExtra;
 
     [Header("Body")]
+    [SerializeField] GameObject _headPrefab;
     [SerializeField] GameObject _bodyPrefab;
     [SerializeField] float _increaseSpeed = 0.03f;
     [SerializeField] float _timeToMove = 0.3f;
     [SerializeField] float _timeLapse = 0.1f;
-
 
     [Header("Buttons Speed")]
     [SerializeField] float _timeDelayButton = 0.8f;
@@ -38,6 +38,8 @@ public class HeadController : MonoBehaviour
     [SerializeField] float _movementVolume = 1f;
     [SerializeField] AudioClip _audioOpening;
     [SerializeField] float _openingVolume = 1f;
+    [SerializeField] AudioClip _audioGameover;
+    [SerializeField] float _openingGameover = 1f;
     [SerializeField] AudioClip _audioSpeedUp;
     [SerializeField] float _speedUpVolume = 1f;
 
@@ -45,26 +47,31 @@ public class HeadController : MonoBehaviour
     {
         _hUDController = FindObjectOfType<HUDController>();
         _spawnBody = FindObjectOfType<SpawnController>();
-        _foodInGame = _spawnBody.GenerateBody();
-        _direction = Vector2.left;
+        _direction = Vector2.right;
+        _headPrefab.SetActive(false);
 
         _bodyList = new List<Transform>();
         _bodyList.Add(this.transform);
-
-        StartCoroutine(Initialize());
-
-        AudioController.Instance.PlayMusic(_audioOpening, _openingVolume);
     }
 
     void Update()
     {
+        StartGame();
         SetDirection();
     }
 
-    IEnumerator Initialize()
+    void StartGame()
     {
-        yield return new WaitForSeconds(_audioOpening.length);
-        StartCoroutine(Move());
+        if (_hUDController.StartGame)
+        {
+            AudioController.Instance.PlayMusic(_audioOpening, _openingVolume);
+
+            _hUDController.StartGame = false;
+            _hUDController.HidePanelStart();
+            _headPrefab.SetActive(true);
+            _foodInGame = _spawnBody.GenerateBody();
+            StartCoroutine(Move());
+        }
     }
 
     void SetDirection()
@@ -75,13 +82,13 @@ public class HeadController : MonoBehaviour
         {
             _timeButton = 0;
 
-            if (Input.GetKey(KeyCode.W) && _direction != Vector2.down)
+            if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) && _direction != Vector2.down)
                 _direction = Vector2.up;
-            else if (Input.GetKey(KeyCode.S) && _direction != Vector2.up)
+            else if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) && _direction != Vector2.up)
                 _direction = Vector2.down;
-            else if (Input.GetKey(KeyCode.A) && _direction != Vector2.right)
+            else if ((Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) && _direction != Vector2.right)
                 _direction = Vector2.left;
-            else if (Input.GetKey(KeyCode.D) && _direction != Vector2.left)
+            else if ((Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) && _direction != Vector2.left)
                 _direction = Vector2.right;
         }
     }
@@ -132,19 +139,6 @@ public class HeadController : MonoBehaviour
         }
     }
 
-    void SetGoal()
-    {
-        _amountOfFood += 1;
-
-        if ((_bodyList.Count % 10) == 0)
-        {
-            Debug.Log("1");
-            _goal += 10;
-        }
-
-        _hUDController.SetGoal($"{_amountOfFood}/{_goal}");
-    }
-
     void CreateFood()
     {
         Destroy(_foodInGame.gameObject);
@@ -161,14 +155,27 @@ public class HeadController : MonoBehaviour
         IncreaseBody();
     }
 
+    void SetGoal()
+    {
+        _amountOfFood += 1;
+
+        if ((_bodyList.Count % 10) == 0)
+        {
+            Debug.Log("1");
+            _goal += 10;
+        }
+
+        _hUDController.SetGoal($"{_amountOfFood}/{_goal}");
+    }
+
     void IncreaseBody()
     {
         Transform bodyPrefab = Instantiate(_bodyPrefab.transform);
         bodyPrefab.position = _bodyList[_bodyList.Count - 1].position;
         _bodyList.Add(bodyPrefab.transform);
 
-        SetGoal();
         UpdateSpeed();
+        SetGoal();
     }
 
     void UpdatePositionBody()
@@ -208,6 +215,7 @@ public class HeadController : MonoBehaviour
     void Die()
     {
         _dead = true;
+        AudioController.Instance.PlayMusic(_audioGameover, _openingGameover);
         AudioController.Instance.PlayAudioCue(_audioDie, _dieVolume);
         _direction = Vector2.zero;
         StartCoroutine(DestroyBody(_timeLapse));
